@@ -1,0 +1,11 @@
+mysql:
+  host: "docker.for.mac.localhost"
+  port: "13306"
+  dbName: "fliqt"
+  user: "root"
+  password: "1qaz!QAZ"
+redis:
+  host: "docker.for.mac.localhost"
+  port: "16379"
+  password: ""
+  db: 0

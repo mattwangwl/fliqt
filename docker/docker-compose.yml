@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  fliqt:
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+    container_name: fliqt_server
+    ports:
+      - "8801:8801"
+    volumes:
+      - ./config.yaml:/app/config/config.yaml
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
+  mysql:
+    image: mysql:8.0
+    platform: linux/amd64
+    container_name: fliqt_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 1qaz!QAZ
+    ports:
+      - "13306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "--silent"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+  redis:
+    image: redis:7.0
+    container_name: fliqt_redis
+    ports:
+      - "16379:6379"
+
